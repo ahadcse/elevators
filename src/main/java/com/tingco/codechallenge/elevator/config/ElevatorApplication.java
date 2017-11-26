@@ -1,28 +1,25 @@
 package com.tingco.codechallenge.elevator.config;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
+import com.google.common.eventbus.AsyncEventBus;
+import com.google.common.eventbus.EventBus;
+import com.tingco.codechallenge.elevator.api.ElevatorControllerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.*;
 
-import com.google.common.eventbus.AsyncEventBus;
-import com.google.common.eventbus.EventBus;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Preconfigured Spring Application boot class.
- *
  */
 @Configuration
-@ComponentScan(basePackages = { "com.tingco.codechallenge.elevator" })
+@ComponentScan(basePackages = {"com.tingco.codechallenge.elevator"})
 @EnableAutoConfiguration
-@PropertySources({ @PropertySource("classpath:application.properties") })
+@PropertySources({@PropertySource("classpath:application.properties")})
 public class ElevatorApplication {
 
     @Value("${com.tingco.elevator.numberofelevators}")
@@ -31,8 +28,7 @@ public class ElevatorApplication {
     /**
      * Start method that will be invoked when starting the Spring context.
      *
-     * @param args
-     *            Not in use
+     * @param args Not in use
      */
     public static void main(final String[] args) {
         SpringApplication.run(ElevatorApplication.class, args);
@@ -58,4 +54,13 @@ public class ElevatorApplication {
         return new AsyncEventBus(Executors.newCachedThreadPool());
     }
 
+    /**
+     * Create the only elevator controller.
+     *
+     * @return ElevatorControllerImpl for controlling the elevators.
+     */
+    @Bean
+    public ElevatorControllerImpl getElevatorController() {
+        return new ElevatorControllerImpl(numberOfElevators);
+    }
 }

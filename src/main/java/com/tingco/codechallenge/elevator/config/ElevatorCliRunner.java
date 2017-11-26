@@ -1,35 +1,24 @@
-package com.tingco.codechallenge.elevator;
+package com.tingco.codechallenge.elevator.config;
 
 import com.tingco.codechallenge.elevator.api.ElevatorControllerImpl;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.tingco.codechallenge.elevator.config.ElevatorApplication;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Executor;
 
-/**
- * Boiler plate test class to get up and running with a test faster.
- *
- * @author Sven Wesley
- *
- */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = ElevatorApplication.class)
-public class IntegrationTest {
-
+@Component
+public class ElevatorCliRunner implements CommandLineRunner {
     @Autowired
     private Executor taskExecutor;
 
     @Autowired
     private ElevatorControllerImpl elevatorController;
 
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("Elevators: " + elevatorController.getElevators());
 
-    @Test
-    public void simulateAnElevatorShaft() {
         taskExecutor.execute(() -> elevatorController.requestElevator(5));
         taskExecutor.execute(() -> elevatorController.requestElevator(10));
         taskExecutor.execute(() -> elevatorController.requestElevator(3));
@@ -38,5 +27,4 @@ public class IntegrationTest {
         taskExecutor.execute(() -> elevatorController.requestElevator(2));
         taskExecutor.execute(() -> elevatorController.requestElevator(2));
     }
-
 }

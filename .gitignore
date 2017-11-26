@@ -6,7 +6,6 @@ atlassian-ide-plugin.xml
 *~
 target/
 *#
-.DS_Store
 xspec/xspec/
 *-result.html
 rebel_project.xml
