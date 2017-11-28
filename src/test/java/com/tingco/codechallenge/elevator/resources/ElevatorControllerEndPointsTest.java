@@ -60,6 +60,15 @@ public class ElevatorControllerEndPointsTest {
     }
 
     @Test
+    public void release() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/rest/v1/release?id=2")
+                .accept(MediaType.ALL))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+        ;
+    }
+
+    @Test
     public void request() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/rest/v1/request?toFloor=1")
@@ -72,16 +81,6 @@ public class ElevatorControllerEndPointsTest {
                 .andExpect(jsonPath("$.responseBody.id", is(notNullValue())))
                 .andExpect(jsonPath("$.responseBody.addressedFloor", is(1)))
                 .andExpect(jsonPath("$.responseBody.busy", is(true)))
-        ;
-    }
-
-
-    @Test
-    public void release() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/rest/v1/release?id=2")
-                .accept(MediaType.ALL))
-                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
         ;
     }
 
