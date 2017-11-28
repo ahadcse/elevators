@@ -156,7 +156,10 @@ class ElevatorImpl implements Elevator {
         try {
             stoppageFloors.clear();
             direction = Direction.NONE;
-        } finally {
+        } catch (Exception e) {
+            throw new ElevatorException("Error in releasing elevator: " + e.getMessage());
+        }
+        finally {
             movementLock.unlock();
         }
     }
@@ -166,7 +169,6 @@ class ElevatorImpl implements Elevator {
         try {
             stoppageFloors.add(floor);
             stoppageFloors = new Vector<>(stoppageFloors.stream().distinct().sorted().collect(Collectors.toList()));
-
             LOGGER.info("Elevator #" + getId() + ") enqueued floor: " + floor + ". Next stoppages: " + stoppageFloors);
         } finally {
             movementLock.unlock();
