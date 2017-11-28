@@ -52,3 +52,24 @@ or start the target JAR file
     mvn package
     java -jar target/elevator-1.0-SNAPSHOT.jar
 
+## Elevator functionality summary:
+
+ * There are X elevators and Y floors
+ * On each floor, there is only 1 button to call for any elevator
+ * After inserting into the lift, a person can choose another floor      
+    
+## How to access the REST endpoints:
+There are 3 REST endpoints that are implemented in this project. Following is the instruction regarding how they can be run:
+
+ * `Request for elevator:` http://localhost:8080/rest/v1/request?toFloor={destinationFloorNumber}
+ * `Get all elevators:` http://localhost:8080/rest/v1/get
+ * `Release the elevator:`  http://localhost:8080/rest/v1/release?id={elevatorIdToRelease}
+ 
+## Integration Test:  
+ElevatorControllerEndPointsTest.java     
+
+## Simulator
+ElevatorCliRunner.java
+
+## Unit Test:
+TODO

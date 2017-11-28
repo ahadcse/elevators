@@ -30,13 +30,6 @@ public class IntegrationTest {
 
     @Test
     public void simulateAnElevatorShaft() {
-        taskExecutor.execute(() -> elevatorController.requestElevator(5));
-        taskExecutor.execute(() -> elevatorController.requestElevator(10));
-        taskExecutor.execute(() -> elevatorController.requestElevator(3));
-        taskExecutor.execute(() -> elevatorController.requestElevator(6));
-        taskExecutor.execute(() -> elevatorController.requestElevator(7));
-        taskExecutor.execute(() -> elevatorController.requestElevator(2));
-        taskExecutor.execute(() -> elevatorController.requestElevator(2));
     }
 
 }

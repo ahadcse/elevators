@@ -49,23 +49,6 @@ public class ElevatorControllerEndPointsTest {
     }
 
     @Test
-    public void request() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders
-        .get("/rest/v1/request?toFloor=3")
-        .accept(MediaType.ALL))
-                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-                .andExpect(jsonPath("$.responseCode", is(HttpStatus.OK.value())))
-                .andExpect(jsonPath("$.responseMessage", is("Elevator found for serving")))
-                .andExpect(jsonPath("$.responseBody", is(notNullValue())))
-                .andExpect(jsonPath("$.responseBody.id", is(notNullValue())))
-                .andExpect(jsonPath("$.responseBody.direction", is("NONE")))
-                .andExpect(jsonPath("$.responseBody.addressedFloor", is(notNullValue())))
-                .andExpect(jsonPath("$.responseBody.addressedFloor", is(3)))
-                .andExpect(jsonPath("$.responseBody.busy", is(false)))
-        ;
-    }
-
-    @Test
     public void get() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/rest/v1/get")
@@ -77,6 +60,22 @@ public class ElevatorControllerEndPointsTest {
         ;
 
     }
+
+    @Test
+    public void request() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/rest/v1/request?toFloor=1")
+                .accept(MediaType.ALL))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andExpect(jsonPath("$.responseCode", is(HttpStatus.OK.value())))
+                .andExpect(jsonPath("$.responseMessage", is("Elevator found for serving")))
+                .andExpect(jsonPath("$.responseBody", is(notNullValue())))
+                .andExpect(jsonPath("$.responseBody.id", is(notNullValue())))
+                .andExpect(jsonPath("$.responseBody.addressedFloor", is(1)))
+                .andExpect(jsonPath("$.responseBody.busy", is(true)))
+        ;
+    }
+
 
     @Test
     public void release() throws Exception {

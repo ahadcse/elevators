@@ -1,5 +1,7 @@
 package com.tingco.codechallenge.elevator.api;
 
+import java.util.List;
+
 /**
  * Interface for an elevator object.
  *
@@ -39,8 +41,7 @@ public interface Elevator {
     /**
      * Command to move the elevator to the given floor.
      *
-     * @param toFloor
-     *            int where to go.
+     * @param toFloor int where to go.
      */
     void moveElevator(int toFloor);
 
@@ -58,4 +59,8 @@ public interface Elevator {
      */
     int currentFloor();
 
+    /**
+     * Release an elevator. Elevator will stop when addressed floor is reached.
+     */
+    void releaseElevator();
 }

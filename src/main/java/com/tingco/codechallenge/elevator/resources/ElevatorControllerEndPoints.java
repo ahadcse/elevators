@@ -1,8 +1,6 @@
 package com.tingco.codechallenge.elevator.resources;
 
-import com.tingco.codechallenge.elevator.api.ApiResponse;
-import com.tingco.codechallenge.elevator.api.Elevator;
-import com.tingco.codechallenge.elevator.api.ElevatorControllerImpl;
+import com.tingco.codechallenge.elevator.api.*;
 import com.tingco.codechallenge.elevator.exception.ElevatorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Rest Resource.
  *
  * @author Sven Wesley
- *
  */
 @RestController
 @RequestMapping("/rest/v1")
@@ -27,7 +25,11 @@ public final class ElevatorControllerEndPoints {
     private static Logger LOGGER = LoggerFactory.getLogger(ElevatorControllerEndPoints.class);
 
     @Autowired
-    private ElevatorControllerImpl elevatorController;
+    private ElevatorController elevatorController;
+
+    @Autowired
+    private ElevatorConfiguration elevatorConfiguration;
+
     /**
      * Ping service to test if we are alive.
      *
@@ -43,7 +45,7 @@ public final class ElevatorControllerEndPoints {
         ApiResponse<Elevator> apiResponse = null;
         LOGGER.info("request controller started...");
         Elevator elevator = elevatorController.requestElevator(toFloor);
-        if(elevator == null) {
+        if (elevator == null) {
             LOGGER.info("All elevators are busy.");
             throw new ElevatorException("All elevators are busy");
         }
@@ -57,7 +59,7 @@ public final class ElevatorControllerEndPoints {
         ApiResponse<List<Elevator>> apiResponse;
         LOGGER.info("get controller started...");
         List<Elevator> elevators = elevatorController.getElevators();
-        if(elevators.isEmpty()) {
+        if (elevators.isEmpty()) {
             LOGGER.error("No elevator found");
             throw new ElevatorException("No elevator list found");
         }
@@ -67,8 +69,17 @@ public final class ElevatorControllerEndPoints {
     }
 
     @RequestMapping(value = "/release", method = RequestMethod.GET)
-    public void release(Elevator elevator) {
+    public void release(@RequestParam(value = "id", required = true) int id) {
         LOGGER.info("release controller started...");
-        elevatorController.releaseElevator(elevator);
+        if (id < 0 || id > elevatorConfiguration.numberOfFloors) {
+            LOGGER.error("Cannot release invaid elevator");
+            throw new ElevatorException("Cannot release invaid elevator");
+        }
+        try {
+            Elevator elevator = elevatorController.getElevators().get(id);
+            elevatorController.releaseElevator(elevator);
+        } catch (ElevatorException e) {
+            throw new ElevatorException("No elevator exists with Id: " + id);
+        }
     }
 }

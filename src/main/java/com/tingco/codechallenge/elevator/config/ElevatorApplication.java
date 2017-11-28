@@ -2,12 +2,12 @@ package com.tingco.codechallenge.elevator.config;
 
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
+import com.tingco.codechallenge.elevator.api.ElevatorConfiguration;
+import com.tingco.codechallenge.elevator.api.ElevatorController;
 import com.tingco.codechallenge.elevator.api.ElevatorControllerImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.*;
 
 import java.util.concurrent.Executor;
@@ -24,6 +24,9 @@ public class ElevatorApplication {
 
     @Value("${com.tingco.elevator.numberofelevators}")
     private int numberOfElevators;
+
+    @Value("${com.tingco.elevator.numberoffloors}")
+    private int numberOfFloors;
 
     /**
      * Start method that will be invoked when starting the Spring context.
@@ -54,13 +57,18 @@ public class ElevatorApplication {
         return new AsyncEventBus(Executors.newCachedThreadPool());
     }
 
+    @Bean
+    public ElevatorConfiguration getConfiguration() {
+        return new ElevatorConfiguration(numberOfElevators, numberOfFloors);
+    }
+
     /**
      * Create the only elevator controller.
      *
      * @return ElevatorControllerImpl for controlling the elevators.
      */
-    @Bean
-    public ElevatorControllerImpl getElevatorController() {
-        return new ElevatorControllerImpl(numberOfElevators);
+    @Bean(initMethod = "init")
+    public ElevatorController getElevatorController() {
+        return new ElevatorControllerImpl();
     }
 }
