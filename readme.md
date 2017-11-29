@@ -69,7 +69,9 @@ There are 3 REST endpoints that are implemented in this project. Following is th
 ElevatorControllerEndPointsTest.java     
 
 ## Simulator
-ElevatorCliRunner.java
+`ElevatorCliRunner.java` runs some simulation case for elevator
 
 ## Unit Test:
-ElevatorControllerImplTest.java
+`ElevatorControllerImplTest.java` Unit tests written for ElevatorControllerImpl class
+
+As ElevatorImpl is not public so it cannot be instantiate outside of the package. We can make that public and write test case but it will be a design violation if no one but ElevatorController can instantiate it. 
