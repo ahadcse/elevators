@@ -42,7 +42,6 @@ public class ElevatorControllerImpl implements ElevatorController {
             closetElevator.moveElevator(toFloor);
             return closetElevator;
         }
-
         throw new IllegalStateException("We should get at least 1 elevator served.");
     }
 

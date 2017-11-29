@@ -62,7 +62,7 @@ public class ElevatorCliRunner implements CommandLineRunner {
     /**
      * - Total number of elevators = 2
      * - Total number of floors = 10
-     * - All elevator is stopped.
+     * - All elevators are stopped.
      * - 4 SERIAL requests came from 4 floors. Each floor will move to different floor.
      */
     private void runCase1() {

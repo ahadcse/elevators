@@ -74,4 +74,8 @@ ElevatorControllerEndPointsTest.java
 ## Unit Test:
 `ElevatorControllerImplTest.java` Unit tests written for ElevatorControllerImpl class
 
-As ElevatorImpl is not public so it cannot be instantiate outside of the package. We can make that public and write test case but it will be a design violation if no one but ElevatorController can instantiate it. 
+As ElevatorImpl is not public so it cannot be instantiate outside of the package. We can make that public and write test case but it will be a design violation if no one but ElevatorController can instantiate it.
+
+## Future improvement:
+
+The algorithm picks a random elevator from the pool to serve. The algorithm can be improved so that it can find the best elevator to serve the request. 
